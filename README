@@ -27,7 +27,7 @@ OPTIONS
 --watchlist     Add movies to watchlist
 --username=     Your username
 --password=     Your password (not recommended, instead enter password when prompted)
---apikey=       Your API key (get from here: http://trakt.tv/api-docs/authentication)
+--apikey=       Your API key (get from here: http://trakt.tv/settings/api)
 --dry           Don't do anything, just show what would happen (not implemented)
 --debug         Turn on debuging mode (doesn't exist)
 
