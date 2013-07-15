@@ -4,6 +4,7 @@ trakt-list-import
 Python script to help you import a list of movies in a file into trakt.
 
 ABOUT
+
 Movie names are one per line. The ideal format is "<name> <year>"
 It is not required to have a year in the name but it helps IMDB
 The whole idea is that this script will clean up the names before searching
@@ -20,6 +21,7 @@ Examples of dirty movie names that can be cleaned:
 	Lars.and.the.Real.Girl.2007.720p.BluRay.X264-AMIABLE.mkv
 
 OPTIONS
+
 -h
 --help          Show help
 --seen          Add movies to library (default setting, not required)
