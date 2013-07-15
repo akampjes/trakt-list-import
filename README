@@ -4,7 +4,6 @@ trakt-list-import
 Python script to help you import a list of movies in a file into trakt.
 
 ABOUT
-
 Movie names are one per line. The ideal format is "<name> <year>"
 It is not required to have a year in the name but it helps IMDB
 The whole idea is that this script will clean up the names before searching
