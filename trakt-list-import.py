@@ -54,6 +54,24 @@ def get_data(filename):
 
     return d
 
+def send_data(imdb_id_data):
+    pydata = {
+            'username':USERNAME,
+            'password':PASSWORD,
+            'movies': imdb_id_data
+            }
+    json_data = json.dumps(pydata)
+    clen = len(json_data)
+    print json_data
+    if watchlist == 1:
+                req = urllib2.Request("https://api.trakt.tv/movie/watchlist/"+APIKEY, jsondata, {'Content-Type': 'application/json', 'Content-Length': clen})
+    else:
+        req = urllib2.Request("https://api.trakt.tv/movie/seen/"+APIKEY, jsondata, {'Content-Type': 'application/json', 'Content-Length': clen})
+    f = urllib2.urlopen(req)
+    response = f.read()
+    f.close()
+    print response
+
 def get_imdb_info(title, year=None):
     if year != None:
         s='http://mymovieapi.com/?title='+title+'&yg=1&mt=M&year='+str(year)
@@ -140,6 +158,7 @@ if __name__ == "__main__":
     for f in files:
         fin = open(f, 'r')
         fout_unknown = open(f+".unknown", 'w')
+        imdb_id_list = []
         for name in fin:
             d=get_data(name)
             print "Cleanname: " + d['cleanname']
@@ -153,21 +172,20 @@ if __name__ == "__main__":
                 imdb_title = imdbinfo[0]['title']
                 imdb_year = imdbinfo[0]['year']
                 print "imdb: %s %s %s" % (imdb_title, imdb_year ,imdb_id)
-                pydata = {'username':USERNAME,'password':PASSWORD,'movies':[{'imdb_id':imdb_id}]}
-                jsondata = json.dumps(pydata)
-                clen = len(jsondata)
-                if watchlist == 1:
-                    req = urllib2.Request("https://api.trakt.tv/movie/watchlist/"+APIKEY, jsondata, {'Content-Type': 'application/json', 'Content-Length': clen})
-                else:
-                    req = urllib2.Request("https://api.trakt.tv/movie/seen/"+APIKEY, jsondata, {'Content-Type': 'application/json', 'Content-Length': clen})
-                f = urllib2.urlopen(req)
-                response = f.read()
-                f.close()
-                print response
+
+                imdb_id_list.append({'imdb_id':imdb_id})
+
+                # send batch of 100 IMDB IDs
+                if len(imdb_id_list) >= 100:
+                    send_data(imdb_id_list)
+                    imdb_id_list = []
             else:
-                #write out any names that can't be found in imdb so that you can fix them
+                # write out any names that can't be found in imdb so that you can fix them
                 print('imdb: nothing found')
                 fout_unknown.write(name.strip()+'\n')
             time.sleep(1)
             print ""
+        # send unset IDs in list
+        if len(imdb_id_list) > 0:
+            send_data(imdb_id_list)
 
