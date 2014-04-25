@@ -8,7 +8,6 @@ import urllib2
 import json
 import getopt
 import time
-import json
 import hashlib
 import getpass
 
@@ -74,13 +73,11 @@ def send_data(imdb_id_data):
 
 def get_imdb_info(title, year=None):
     if year != None:
-        s='http://mymovieapi.com/?title='+title+'&yg=1&mt=M&year='+str(year)
+        s='http://omdbapi.com/?t='+title+'&y='+str(year)
     else:
-        s='http://mymovieapi.com/?title='+title+'&mt=M'
+        s='http://omdbapi.com/?t='+title
     url = urllib2.urlopen(s.replace(' ','.'))
     data = url.read()
-    if re.search('Film not found', data):
-        return None
     res = json.loads(data)
     return res
 
@@ -167,10 +164,10 @@ if __name__ == "__main__":
                 imdbinfo = get_imdb_info(d['cleanname'],d['year'])
             else:
                 imdbinfo = get_imdb_info(d['cleanname'])
-            if imdbinfo != None:
-                imdb_id = imdbinfo[0]['imdb_id']
-                imdb_title = imdbinfo[0]['title']
-                imdb_year = imdbinfo[0]['year']
+            if imdbinfo['Response'] != 'False':
+                imdb_id = imdbinfo['imdbID']
+                imdb_title = imdbinfo['Title']
+                imdb_year = imdbinfo['Year']
                 print "imdb: %s %s %s" % (imdb_title, imdb_year ,imdb_id)
 
                 imdb_id_list.append({'imdb_id':imdb_id})
