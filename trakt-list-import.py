@@ -63,9 +63,9 @@ def send_data(imdb_id_data):
     clen = len(json_data)
     print json_data
     if watchlist == 1:
-                req = urllib2.Request("https://api.trakt.tv/movie/watchlist/"+APIKEY, jsondata, {'Content-Type': 'application/json', 'Content-Length': clen})
+                req = urllib2.Request("https://api.trakt.tv/movie/watchlist/"+APIKEY, json_data, {'Content-Type': 'application/json', 'Content-Length': clen})
     else:
-        req = urllib2.Request("https://api.trakt.tv/movie/seen/"+APIKEY, jsondata, {'Content-Type': 'application/json', 'Content-Length': clen})
+        req = urllib2.Request("https://api.trakt.tv/movie/seen/"+APIKEY, json_data, {'Content-Type': 'application/json', 'Content-Length': clen})
     f = urllib2.urlopen(req)
     response = f.read()
     f.close()
