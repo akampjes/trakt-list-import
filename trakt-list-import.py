@@ -39,6 +39,8 @@ def get_data(filename):
     filename = re.sub('\.', ' ', filename, flags=re.IGNORECASE)
     filename = re.sub('-', ' ', filename, flags=re.IGNORECASE)
     filename = re.sub(',', ' ', filename, flags=re.IGNORECASE)
+    filename = re.sub('\'', '', filename, flags=re.IGNORECASE)
+    filename = re.sub('"', '', filename, flags=re.IGNORECASE)
     filename = re.sub('\s+', ' ', filename, flags=re.IGNORECASE)
     filename = re.sub('('+SOURCES+').*', '', filename, flags=re.IGNORECASE)
     filename = re.sub('('+CODECS+').*', '', filename, flags=re.IGNORECASE)
@@ -76,7 +78,7 @@ def get_imdb_info(title, year=None):
         s='http://omdbapi.com/?t='+title+'&y='+str(year)
     else:
         s='http://omdbapi.com/?t='+title
-    url = urllib2.urlopen(s.replace(' ','.'))
+    url = urllib2.urlopen(s.replace(' ','+'))
     data = url.read()
     res = json.loads(data)
     return res
@@ -164,6 +166,7 @@ if __name__ == "__main__":
                 imdbinfo = get_imdb_info(d['cleanname'],d['year'])
             else:
                 imdbinfo = get_imdb_info(d['cleanname'])
+            print imdbinfo
             if imdbinfo['Response'] != 'False':
                 imdb_id = imdbinfo['imdbID']
                 imdb_title = imdbinfo['Title']
