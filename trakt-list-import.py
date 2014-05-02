@@ -166,7 +166,6 @@ if __name__ == "__main__":
                 imdbinfo = get_imdb_info(d['cleanname'],d['year'])
             else:
                 imdbinfo = get_imdb_info(d['cleanname'])
-            print imdbinfo
             if imdbinfo['Response'] != 'False':
                 imdb_id = imdbinfo['imdbID']
                 imdb_title = imdbinfo['Title']
