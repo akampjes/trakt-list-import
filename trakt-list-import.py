@@ -120,7 +120,7 @@ def usage(argv0):
 if __name__ == "__main__":
     try:
         args, files = getopt.gnu_getopt(sys.argv[1:], 'h',[
-            'dry','debug','help','watchlist','username=','password=','apikey='])
+            'dry','debug','help','watchlist','seen','username=','password=','apikey='])
     except:
         print "\nPlease  c h e c k   a r g u m e n t s\n\n"
         usage(sys.argv[0])
