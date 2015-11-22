@@ -1,7 +1,7 @@
 trakt-list-import
 =================
 
-*This script is broken at the moment. Needs upgrading to the trakt API version 2*
+**This script is broken at the moment. Needs upgrading to the trakt API version 2**
 
 Python script to help you import a list of movies in a file into trakt.
 
